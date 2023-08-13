@@ -2,8 +2,6 @@
 
 {% block content %}
 
-<!-- <div class="col-md-6 offset-md-3"> -->
-
     {% if user.is_authenticated %}
     <h1>Records...</h1>
     {% if records %}
@@ -22,10 +20,10 @@
         {% for record in records %}
         <tr>
           <th scope="row">{{record.id}}</th>
-          <td>{{record.first_name}} {{record.last_name}}</td>
+          <td><a href="{% url 'record' record.id %}">{{record.first_name|capfirst}} {{record.last_name|capfirst}}</a></td>
           <td>{{record.email}}</td>
           <td>{{record.phone}}</td>
-          <td>{{record.address}}, {{record.city}}, {{record.state}}, {{record.zipcode}}</td>
+          <td>{{record.address|capfirst}}, {{record.city|capfirst}}, {{record.state|capfirst}}, {{record.zipcode}}</td>
         </tr>
         {% endfor %}
       </tbody>
@@ -33,6 +31,7 @@
     
     {% endif %}
     {% else %}
+    <div class="col-md-6 offset-md-3">
     <h1>LOGIN!</h1>
     <br/>
     <form method="POST" action="{% url 'home' %}">
@@ -46,6 +45,6 @@
         <br/>
         <button type="submit" class="btn btn-secondary">Login</button>
       </form>
+      </div>
       {% endif %}
-<!-- </div> -->
 {% endblock %}
