@@ -50,6 +50,8 @@ def logout_user(request):
     messages.success(request, "Loggedout Succesfully!!")
     return redirect('home')
 
+#   Create Function
+
 def create_record(request):
     form= AddRecordForm(request.POST or None)
 
@@ -64,6 +66,7 @@ def create_record(request):
                 messages.success(request, "You must have been Logged to add Record")
                 return redirect('home')
 
+# Read Function
 
 def customer_record(request, pk):
     if request.user.is_authenticated:
@@ -73,8 +76,22 @@ def customer_record(request, pk):
         messages.success(request, "You must be Logged in to view that page!")
         return redirect('home')
 
-def update_record(request):
-    pass
+# Update Function
+
+def update_record(request, pk):
+    if request.user.is_authenticated:
+        current_record = Record.objects.get(id=pk)
+        form = AddRecordForm(request.POST or None, instance=current_record)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Record Has Been Updated!")
+            return redirect('home')
+        return render(request, 'update_record.html', {'form':form})
+    else:
+        messages.success(request, "You Must Be Logged In...")
+        return redirect('home')
+    
+# Delete Function
 
 def delete_record(request, pk):
     if request.user.is_authenticated:
