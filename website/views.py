@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from .forms import SignUpForm
+from .forms import SignUpForm, AddRecordForm
 from .models import Record
 # Create your views here.
 
@@ -50,6 +50,21 @@ def logout_user(request):
     messages.success(request, "Loggedout Succesfully!!")
     return redirect('home')
 
+def create_record(request):
+    form= AddRecordForm(request.POST or None)
+
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            if form.is_valid():
+                add_Record= form.save()
+                messages.success(request, "Record Added Successfully...")
+                return redirect('home')
+        return render(request, 'create_record.html', {'form':form})
+    else:
+                messages.success(request, "You must have been Logged to add Record")
+                return redirect('home')
+
+
 def customer_record(request, pk):
     if request.user.is_authenticated:
         customer_record= Record.objects.get(id=pk)
@@ -58,6 +73,8 @@ def customer_record(request, pk):
         messages.success(request, "You must be Logged in to view that page!")
         return redirect('home')
 
+def update_record(request):
+    pass
 
 def delete_record(request, pk):
     if request.user.is_authenticated:

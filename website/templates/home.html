@@ -19,7 +19,7 @@
       <tbody>
         {% for record in records %}
         <tr>
-          <th scope="row">{{record.id}}</th>
+          <th scope="row">{{forloop.counter}}</th>
           <td><a href="{% url 'record' record.id %}">{{record.first_name|capfirst}} {{record.last_name|capfirst}}</a></td>
           <td>{{record.email}}</td>
           <td>{{record.phone}}</td>
