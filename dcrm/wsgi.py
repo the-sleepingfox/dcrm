@@ -14,3 +14,7 @@ from django.core.wsgi import get_wsgi_application
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'dcrm.settings')
 
 application = get_wsgi_application()
+
+# for vercel understanding purpose we assign application to app variable
+
+app= application
