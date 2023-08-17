@@ -16,11 +16,11 @@
     "routes": [
         {
             "src": "/static/(.*)",
-            "dist": "/static/$1"
+            "dest": "/static/$1"
         },
         {
             "src": "/(.*)",
-            "dist": "dcrm/wsgi.py"
+            "dest": "dcrm/wsgi.py"
         }
     ]
 
